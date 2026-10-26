@@ -1,0 +1,237 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --code-bg: #0f172a;
+    --code-text: #f8fafc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    color: var(--text-main);
+    background-color: var(--bg-main);
+    padding-bottom: 40px;
+}
+
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navigasyon Barı */
+.nav {
+    background: var(--card-bg);
+    padding: 14px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.nav a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav a:hover {
+    background: #eef2ff;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-buttons button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-buttons button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* Ders İçeriği */
+.lesson-content {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+}
+
+.lesson-content h1 {
+    color: #1e293b;
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.lesson-content h2 {
+    margin-top: 36px;
+    margin-bottom: 16px;
+    color: #1e293b;
+    font-size: 1.35rem;
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
+}
+
+.lesson-content h3 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    color: #334155;
+    font-size: 1.1rem;
+}
+
+.lesson-content p {
+    margin-bottom: 16px;
+}
+
+.lesson-content ul, .lesson-content ol {
+    margin-left: 24px;
+    margin-bottom: 20px;
+}
+
+.lesson-content li {
+    margin-bottom: 6px;
+}
+
+/* Kod Blokları */
+.lesson-content pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 18px 22px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    border: 1px solid #1e293b;
+}
+
+.lesson-content code {
+    font-family: 'JetBrains Mono', monospace;
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 0.88rem;
+    border: 1px solid #e2e8f0;
+}
+
+.lesson-content pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    border: none;
+}
+
+/* Uyarı ve Bilgi Kutuları */
+.info-box, .warning-box, .example-box {
+    padding: 18px 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.info-box {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    color: #1e40af;
+}
+
+.warning-box {
+    background: #fffbeeb;
+    background-color: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+}
+
+.example-box {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    color: #166534;
+}
+
+/* Tablo Stili */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.95rem;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #334155;
+}
+
+tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 12px;
+    }
+    .lesson-content {
+        padding: 20px;
+    }
+    .nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .nav-buttons {
+        justify-content: space-between;
+    }
+}
