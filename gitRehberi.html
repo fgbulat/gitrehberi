@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 62: Git ve GitHub ile Versiyonlama - RPA Projeleri İçin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="index.html">🏠 Ana Sayfa</a>
+            <div class="nav-buttons">
+                <button onclick="location.href='ders61.html'">◀ Önceki Ders</button>
+                <button onclick="location.href='ders63.html'">Sonraki Ders ▶</button>
+            </div>
+        </div>
+        
+        <div class="lesson-content">
+            <h1>İleri Python Ders 62: Git ve GitHub – RPA Projelerinde Versiyonlama</h1>
+            <p><strong>Seviye:</strong> 🟡 Orta | <strong>Tip:</strong> 🛠️ Pratik Uygulama</p>
+            
+            <div class="info-box">
+                🤖 <strong>RPA Bağlantısı:</strong> RPA robotları geliştikçe, eski çalışan koda dönmek, süreç değişikliklerini takip etmek ve ekip halinde çalışmak zorlaşır. Git versiyon kontrol sistemi bu sorunları tamamen çözer.
+            </div>
+            
+            <h2>🎯 Kazanımlar</h2>
+            <ul>
+                <li>Git nedir, neden kullanılır? (Versiyon kontrolünün temel mantığı)</li>
+                <li>Temel Git komutları (<code>init</code>, <code>add</code>, <code>commit</code>, <code>push</code>, <code>pull</code>)</li>
+                <li>Branch (dal) kavramı – Farklı robot senaryolarını yönetme</li>
+                <li>GitHub ile uzak depo (remote repository) kullanımı</li>
+                <li><code>.gitignore</code> ile gereksiz ve hassas dosyaları dışlama</li>
+                <li>Bir RPA projesini GitHub üzerinde güvenle yayınlama</li>
+            </ul>
+            
+            <h2>📖 1. Git Nedir? Neden Kullanırız?</h2>
+            <p>Git, bir <strong>dağıtık versiyon kontrol sistemidir</strong>. Kod dosyanızdaki tüm tarihsel değişiklikleri anlık olarak kaydeder ve dilediğiniz zaman projenin geçmişteki kararlı bir sürümüne dönmenize olanak tanır.</p>
+            
+            <div class="example-box">
+                <strong>📌 Analoji:</strong> Bir fatura aktarım robotu geliştiriyorsunuz. "Ders 10" aşamasında sorunsuz çalışıyordu; ancak yeni özellikler eklerken robot bozuldu. Git sayesinde kodunuzu tek bir komutla "Ders 10" anındaki çalışan haline döndürebilirsiniz.
+            </div>
+            
+            <h2>⚙️ 2. Git Kurulumu ve Kimlik Yapılandırması</h2>
+            <pre><code class="language-bash"># Kurulum Sonrası Sürüm Kontrolü
+git --version
+
+# Küresel Kullanıcı Bilgilerinin Tanımlanması (İlk Kurulumda 1 Kez Yapılır)
+git config --global user.name "Adınız Soyadınız"
+git config --global user.email "eposta@ornek.com"</code></pre>
+            
+            <h2>📁 3. Yerel Depo (Repository) Oluşturma</h2>
+            <pre><code class="language-bash"># Proje klasörüne geçiş yapın
+cd rpa_projem
+
+# Git deposunu başlatın (.git gizli klasörü oluşur)
+git init
+
+# Çalışma alanının durumunu kontrol edin
+git status
+
+# Tüm yeni/değişen dosyaları izlemeye alın
+git add .
+
+# Değişiklikleri versiyon olarak kaydedin (Commit)
+git commit -m "İlk commit: RPA projesi altyapısı kuruldu"</code></pre>
+            
+            <div class="info-box">
+                📌 <strong>Commit Nedir?</strong> Değişikliklerin onaylanmış bir anlık görüntüsüdür (snapshot). Projenizin geliştirme sürecindeki kilometre taşlarıdır.
+            </div>
+            
+            <h2>🔄 4. Günlük Çalışma Akışı ve Temel Komutlar</h2>
+            <pre><code class="language-bash"># Anlık durumu inceleyin
+git status
+
+# Belirli bir dosyayı veya klasörü staging alanına ekleyin
+git add robot.py
+git add moduller/
+
+# İzlenen tüm değişiklikleri commit edin
+git commit -m "PDF veri ayıklama modülü tamamlandı"
+
+# Commit geçmişini tek satırlık özetler halinde listeleyin
+git log --oneline
+
+# Eski bir commit versiyonuna geçici olarak dönün
+git checkout <commit_id>
+
+# Ana dala (main/master) geri dönün
+git checkout main</code></pre>
+            
+            <h2>🌿 5. Branch (Dal) Yönetimi</h2>
+            <p>Branch yapısı, ana çalışan koda zarar vermeden yeni özellik denemeleri yapmanızı sağlar.</p>
+
+            <pre><code class="language-bash"># Yeni dal oluşturma
+git branch yeni_excel_robotu
+
+# İlgili dala geçiş yapma
+git checkout yeni_excel_robotu
+
+# Dal oluşturup doğrudan geçiş yapma (Kısayol)
+git checkout -b yeni_ozellik
+
+# Mevcut dalları listeleme
+git branch
+
+# Çalışmanızı ana dal ile birleştirme
+git checkout main
+git merge yeni_excel_robotu
+
+# İşlevi biten dalı silme
+git branch -d yeni_excel_robotu</code></pre>
+            
+            <div class="example-box">
+                <strong>🎯 RPA Projelerinde Dal Mimarisi:</strong>
+                <ul>
+                    <li><code>main</code>: Canlıda (Production) sorunsuz çalışan robot kodu.</li>
+                    <li><code>dev</code> / <code>gelistirme</code>: Yeni modüllerin eklendiği test alanı.</li>
+                    <li><code>hotfix</code>: Acil giderilmesi gereken canlı hataları için ayrılan dal.</li>
+                </ul>
+            </div>
+            
+            <h2>🐙 6. GitHub – Uzak Depo Kullanımı</h2>
+            <p>Git lokal ortamınızda çalışırken; GitHub bu depoları bulut üzerinde yedeklemenizi ve ekip ortamında paylaşmanızı sağlar.</p>
+            
+            <pre><code class="language-bash"># 1. Yerel depoyu GitHub'daki uzak depoya bağlama
+git remote add origin https://github.com/kullanici_adi/rpa_fatura_robotu.git
+
+# 2. Yerel kodları GitHub'a gönderme (Push)
+git push -u origin main
+
+# 3. Uzak depodaki güncellemeleri yerel projeye çekme (Pull)
+git pull origin main
+
+# 4. Mevcut bir depoyu bilgisayara indirme (Clone)
+git clone https://github.com/kullanici_adi/rpa_fatura_robotu.git</code></pre>
+            
+            <h2>🚫 7. .gitignore – Hassas ve Gereksiz Dosyaları Dışlama</h2>
+            <pre><code class="language-bash"># .gitignore dosyası oluşturma ve kural ekleme
+echo "__pycache__/" >> .gitignore
+echo "*.log" >> .gitignore
+echo ".env" >> .gitignore
+echo "logs/" >> .gitignore
+echo "temp_downloads/" >> .gitignore</code></pre>
+            
+            <div class="info-box">
+                📌 <strong>RPA Projelerinde Takibe Alınmaması Gereken Dosyalar:</strong>
+                <ul>
+                    <li><code>__pycache__/</code> – Python derlenmiş bytecode dosyaları</li>
+                    <li><code>*.log</code> – Çalışma anında üretilen log kayıtları</li>
+                    <li><code>.env</code> – Parolalar, API anahtarları, özel bağlantı tümceleri</li>
+                    <li><code>*.xlsx</code> / <code>*.pdf</code> – Test sırasında işlenen geçici müşteri verileri</li>
+                </ul>
+            </div>
+            
+            <h2>📋 8. Sık Kullanılan Git Komutları Özeti</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komut</th>
+                        <th>Açıklama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>git init</code></td>
+                        <td>Yeni bir Git deposu başlatır.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git clone &lt;url&gt;</code></td>
+                        <td>Uzak depoyu yerel makineye kopyalar.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git add .</code></td>
+                        <td>Tüm değişiklikleri staging alanına alır.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git commit -m "mesaj"</code></td>
+                        <td>Değişiklikleri versiyon kaydı olarak işler.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git push</code></td>
+                        <td>Commit edilmiş değişiklikleri uzak depoya aktarır.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git pull</code></td>
+                        <td>Uzak depodaki son değişiklikleri yerel projeye indirir ve birleştirir.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git status</code></td>
+                        <td>Çalışma alanındaki dosyaların durumunu gösterir.</td>
+                    </tr>
+                    <tr>
+                        <td><code>git log --oneline</code></td>
+                        <td>Geçmiş commit kayıtlarını özet olarak gösterir.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="warning-box">
+                ⚠️ <strong>Güvenlik Uyarısı:</strong> Veritabanı şifrelerini, SAP/Portal kullanıcı bilgilerini ve API anahtarlarını <strong>KESİNLİKLE</strong> GitHub depolarına commit etmeyiniz. Bu tür verileri <code>.env</code> dosyasında tutup <code>.gitignore</code> listesine ekleyiniz.
+            </div>
+            
+            <h2>✍️ Uygulama Alıştırmaları</h2>
+            <ul>
+                <li>Yerel ortamınızda yeni bir RPA proje klasörü açıp <code>git init</code> ile depoyu başlatın.</li>
+                <li>Bir <code>.gitignore</code> dosyası oluşturup <code>.env</code> ve <code>*.log</code> uzantılarını dışlayın.</li>
+                <li><code>gelistirme</code> adında bir dal oluşturup yeni bir Python fonksiyonu ekleyin ve <code>main</code> dalı ile birleştirin.</li>
+            </ul>
+            
+            <h2>🏠 Mini Ödev</h2>
+            <div class="warning-box">
+                <p><strong>Senaryo:</strong> Hazırladığınız Otomatik Fatura İşleme Robotunu GitHub üzerinde yayınlayın.</p>
+                <ol>
+                    <li>GitHub hesabınızda <code>rpa_fatura_robotu</code> adında kamuya açık/özel bir repo açın.</li>
+                    <li>Projeye anlaşılır bir <code>README.md</code> dosyası ekleyerek robotun ne iş yaptığını açıklayın.</li>
+                    <li><code>.gitignore</code> dosyasını doğru yapılandırdığınızdan emin olun.</li>
+                    <li>İlk sürümünüzü <code>main</code> dalına push edin.</li>
+                </ol>
+            </div>
+            
+            <div class="info-box">
+                📌 <strong>Önerilen Kaynaklar:</strong>
+                <ul>
+                    <li><a href="https://git-scm.com/doc" target="_blank">Git Resmi Dokümantasyonu</a></li>
+                    <li><a href="https://learngitbranching.js.org/" target="_blank">Learn Git Branching (Görsel ve İnteraktif Öğrenim)</a></li>
+                </ul>
+            </div>
+            
+            <h2>🔗 Sonraki Ders</h2>
+            <p><strong>İleri Python Ders 63 – CI/CD Pipeline ile RPA Robotlarının Otomatik Yaygınlaştırılması (Deploy)</strong></p>
+        </div>
+        
+        <div class="nav" style="margin-top: 24px;">
+            <a href="index.html">🏠 Ana Sayfa</a>
+            <div class="nav-buttons">
+                <button onclick="location.href='ders61.html'">◀ Önceki Ders</button>
+                <button onclick="location.href='ders63.html'">Sonraki Ders ▶</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🐍 Python ile RPA Eğitim Müfredatı | Gölcük Python Atölyesi</p>
+        </footer>
+    </div>
+</body>
+</html>
