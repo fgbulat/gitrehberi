@@ -84,10 +84,10 @@ git commit -m "PDF veri ayıklama modülü tamamlandı"
 git log --oneline
 
 # Eski bir commit versiyonuna geçici olarak dönün
-git checkout <commit_id>
+git switch <commit_id>
 
 # Ana dala (main/master) geri dönün
-git checkout main</code></pre>
+git switch main</code></pre>
             
             <h2>🌿 5. Branch (Dal) Yönetimi</h2>
             <p>Branch yapısı, ana çalışan koda zarar vermeden yeni özellik denemeleri yapmanızı sağlar.</p>
@@ -96,16 +96,16 @@ git checkout main</code></pre>
 git branch yeni_excel_robotu
 
 # İlgili dala geçiş yapma
-git checkout yeni_excel_robotu
+git switch yeni_excel_robotu
 
 # Dal oluşturup doğrudan geçiş yapma (Kısayol)
-git checkout -b yeni_ozellik
+git switch -b yeni_ozellik
 
 # Mevcut dalları listeleme
 git branch
 
 # Çalışmanızı ana dal ile birleştirme
-git checkout main
+git switch main
 git merge yeni_excel_robotu
 
 # İşlevi biten dalı silme
